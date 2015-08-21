@@ -1,13 +1,13 @@
 from html.parser import HTMLParser
 
 class ITU_HTMLParser(HTMLParser):
-    foundClassTable=False
-    parsedData=[]
-    classInfo=[]
     ITU_HTMLParser_DEPCODEMODE = 0
     ITU_HTMLParser_CLASSMODE = 1
     def __init__(self,parsermode):
         self.mode = parsermode
+        self.foundClassTable=False
+        self.parsedData=[]
+        self.classInfo=[]
         super(ITU_HTMLParser,self).__init__()
 
     def handle_starttag(self, tag, attrs):
@@ -35,20 +35,18 @@ class ITU_HTMLParser(HTMLParser):
             self.foundClassTable = False
 
 class ITUSIS_Parser:
-    def __init__(self):
-        import requests
-        self.requests = requests
+    import requests
 
     def getDepartmentCodes(self):
-        html = self.requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php').text
-        self.parser = ITU_HTMLParser(ITU_HTMLParser.ITU_HTMLParser_DEPCODEMODE)
-        self.parser.feed(html)
-        return self.parser.parsedData
+        html = ITUSIS_Parser.requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php').text
+        parser = ITU_HTMLParser(ITU_HTMLParser.ITU_HTMLParser_DEPCODEMODE)
+        parser.feed(html)
+        return parser.parsedData
 
     def getClasses(self):
-        for dep in self.getDepartmentCodes():
-            html = self.requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php?fb='+dep).text
-            self.parser = ITU_HTMLParser(ITU_HTMLParser.ITU_HTMLParser_CLASSMODE)
-            self.parser.feed(html)
-            #print(dep)
-            print(self.parser.parsedData)
+        for dep in ["LAT","STI"]:
+            print(dep)
+            html = ITUSIS_Parser.requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php?fb='+dep).text
+            parser = ITU_HTMLParser(ITU_HTMLParser.ITU_HTMLParser_CLASSMODE)
+            parser.feed(html)
+            print(parser.parsedData)
