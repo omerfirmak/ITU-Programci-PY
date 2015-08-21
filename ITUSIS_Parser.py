@@ -1,4 +1,7 @@
-from html.parser import HTMLParser
+try:
+    from html.parser import HTMLParser
+except ImportError:
+    from HTMLParser import HTMLParser
 
 class ITU_HTMLParser(HTMLParser):
     ITU_HTMLParser_DEPCODEMODE = 0
@@ -8,7 +11,7 @@ class ITU_HTMLParser(HTMLParser):
         self.foundClassTable=False
         self.parsedData=[]
         self.classInfo=[]
-        super(ITU_HTMLParser,self).__init__()
+        HTMLParser.__init__(self)
 
     def handle_starttag(self, tag, attrs):
         if self.mode == self.ITU_HTMLParser_DEPCODEMODE:
@@ -44,7 +47,7 @@ class ITUSIS_Parser:
         return parser.parsedData
 
     def getClasses(self):
-        for dep in self.getDepartmentCodes():
+        for dep in ["LAT","STI"]:
             html = ITUSIS_Parser.requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php?fb='+dep).text
             parser = ITU_HTMLParser(ITU_HTMLParser.ITU_HTMLParser_CLASSMODE)
             parser.feed(html)
