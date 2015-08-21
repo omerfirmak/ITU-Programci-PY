@@ -44,7 +44,7 @@ class ITUSIS_Parser:
         return parser.parsedData
 
     def getClasses(self):
-        for dep in ["LAT","STI"]:
+        for dep in self.getDepartmentCodes():
             html = ITUSIS_Parser.requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php?fb='+dep).text
             parser = ITU_HTMLParser(ITU_HTMLParser.ITU_HTMLParser_CLASSMODE)
             parser.feed(html)
