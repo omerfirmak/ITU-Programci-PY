@@ -3,3 +3,4 @@ __pycache__/
 ITUSIS_Parser.pyc
 classdb.sqlite
 main.py
+ITU_Programci.py
