@@ -1,3 +1,5 @@
 __pycache__/
 .DS_Store
 ITUSIS_Parser.pyc
+classdb.sqlite
+main.py
