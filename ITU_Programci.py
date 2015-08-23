@@ -147,6 +147,7 @@ class ITU_Programci():
             classCodeList.append(elem[0])
         self.classCodeSpinner[index]['values'] = classCodeList
         self.classCodeSpinner[index].current(0)
+        self.availClassSpinner[index]['values'] = ['']
         self.availClassSpinner[index].current(0)
         self.updateSchedule(None,index)
 
