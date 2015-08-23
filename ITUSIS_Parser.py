@@ -48,7 +48,7 @@ class ITUSIS_Parser:
     def addToDatabase(self,data,dep):
         for classEntry in data:
             insert_query="INSERT INTO classes VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')".format(dep,classEntry[0][0],classEntry[1][0],
-            classEntry[2][0].replace('\'',''),classEntry[3][0],classEntry[4][0],self.calcClassTime(classEntry[5],classEntry[6]),classEntry[11][0])
+            classEntry[2][0].replace('\'',''),classEntry[3][0],','.join(classEntry[4]),self.calcClassTime(classEntry[5],classEntry[6]),classEntry[11][0])
             self.cur.execute(insert_query)
         self.db.commit()
 
@@ -59,6 +59,8 @@ class ITUSIS_Parser:
 
         for i in range(0,len(day)):
             hourasd = hour[i].split('/')
+            if(hourasd[0] == ''):
+                return "Undefined"
             start_t = ITUSIS_Parser.days.index(day[i][:2])*14+(int(hourasd[0][:2])-8);
             stop_t = start_t + int(hourasd[1][:2]) - int(hourasd[0][:2])
             list.append(str(start_t) +'-' + str(stop_t))
