@@ -141,6 +141,7 @@ class ITU_Programci():
             self.availClassSpinner[index].current(0)
             self.updateSchedule(None,index)
             return
+
         self.db.execute('select distinct Code from classes where Depcode=\'%s\'' % depCode)
         classCodeList = ['']
         for elem in self.db.fetchall():
@@ -160,6 +161,7 @@ class ITU_Programci():
             self.availClassSpinner[index].current(0)
             self.updateSchedule(None,index)
             return
+
         self.db.execute('select CRN , Title , Inst  ,Build , Day ,Time  from classes where Code=\'%s\'' % classCode)
         availClassList =['']
         for elem in self.db.fetchall():
