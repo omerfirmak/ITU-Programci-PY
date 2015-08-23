@@ -14,7 +14,7 @@ class ITUSIS_Parser:
         self.db=sqlite3.connect('classdb.sqlite')
         self.cur=self.db.cursor()
         self.cur.execute('''CREATE TABLE classes
-        (Depcode TEXT, CRN TEXT, Code TEXT, Title TEXT, Inst TEXT ,Build TEXT, ClassTime TEXT,Restr TEXT )''')
+        (Depcode TEXT, CRN TEXT, Code TEXT, Title TEXT, Inst TEXT ,Build TEXT, ClassTime TEXT,Restr TEXT,Day TEXT, Time TEXT )''')
 
 
     def getDepartmentCodes(self):
@@ -47,8 +47,9 @@ class ITUSIS_Parser:
 
     def addToDatabase(self,data,dep):
         for classEntry in data:
-            insert_query="INSERT INTO classes VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}')".format(dep,classEntry[0][0],classEntry[1][0],
-            classEntry[2][0].replace('\'',''),classEntry[3][0],','.join(classEntry[4]),self.calcClassTime(classEntry[5],classEntry[6]),classEntry[11][0])
+            insert_query="INSERT INTO classes VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')".format(dep,classEntry[0][0],classEntry[1][0],
+            classEntry[2][0].replace('\'',''),classEntry[3][0],','.join(classEntry[4]),self.calcClassTime(classEntry[5],classEntry[6]),
+            classEntry[11][0],','.join(classEntry[5]),','.join(classEntry[6]))
             self.cur.execute(insert_query)
         self.db.commit()
 
