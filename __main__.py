@@ -1,7 +1,8 @@
-#!/usr/bin/python3
-from tkinter import *
-from tkinter.ttk import *
-import tkinter.messagebox
+#!/usr/bin/python2.7
+# -*- coding: utf-8 -*-
+from Tkinter import *
+from ttk import *
+import tkMessageBox
 import sqlite3
 import time
 import os
@@ -123,9 +124,9 @@ class ITU_Programci():
         if firstBoot:
             root = Tk()
             root.withdraw()
-            tkinter.messagebox.showinfo('Veritabani guncellemesi','Veritabani simdi guncellenecek. Bu islem yaklasik 1-2 dakika surecektir.')
+            tkMessageBox.showinfo('Veritabani guncellemesi','Veritabani simdi guncellenecek. Bu islem yaklasik 1-2 dakika surecektir.')
         else:
-            ans=tkinter.messagebox.askquestion('Veritabani guncellemesi','Veritabanini simdi guncellemek istiyor musunuz?. Bu islem yaklasik 1 dakika surecektir.')
+            ans= tkMessageBox.askquestion('Veritabani guncellemesi','Veritabanini simdi guncellemek istiyor musunuz?. Bu islem yaklasik 1 dakika surecektir.')
             if ans=='no':
                 return
         self.db.close()
@@ -210,6 +211,5 @@ class ITU_Programci():
                 self.weekChart[i]['background']=temp[i]
                 self.weekChart[i]['text']= temp2[i]
 
-os.chdir(os.path.dirname(sys.argv[0]))
 rand_col = ['#CE9090','#CE90CA','#B890CE','#9092CE','#90B9CE','#90CEB5','#90CE92','#C6CE90','#CEBC90','#919191']
 programci = ITU_Programci()
