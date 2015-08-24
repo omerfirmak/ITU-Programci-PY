@@ -202,7 +202,7 @@ class ITU_Programci():
                         else:
                             self.availClassSpinner[index].current(0)
                         self.updateSchedule(event,index)
-                        tkinter.messagebox.showinfo('Hata','Sectiginiz ders baska bir dersinizle cakismaktadir!')
+                        tkMessageBox.showinfo('Hata','Sectiginiz ders baska bir dersinizle cakismaktadir!')
                         return
         for i in range(0,70):
             self.weekChart[i]['background']= 'white'
