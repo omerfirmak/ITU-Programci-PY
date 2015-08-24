@@ -4,6 +4,10 @@ import os
 import requests
 import re
 from bs4 import BeautifulSoup
+import sys
+
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 class ITUSIS_Parser:
     days=['Pa','Sa','Ça','Pe','Cu']
@@ -20,7 +24,9 @@ class ITUSIS_Parser:
 
     def getDepartmentCodes(self):
         list=[]
-        html = requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php').text
+        r=requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php')
+        r.encoding='windows-1254'
+        html = r.text
         soup = BeautifulSoup(html,'html.parser')
         for depCode in soup.findAll('option',{ 'value' : True}):
             val=depCode.get('value')
@@ -33,12 +39,14 @@ class ITUSIS_Parser:
             classList=[]
             classEntry=[]
             cellEntry=[]
-            html = requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php?fb='+dep).text
+            r=requests.get('http://www.sis.itu.edu.tr/tr/ders_programlari/LSprogramlar/prg.php?fb='+dep)
+            r.encoding='windows-1254'
+            html = r.text
             soup = BeautifulSoup(html,'html.parser')
             for rows in soup.findAll('tr', {'onmouseover': True , 'onmouseout': True}):
                 for cells in rows.findAll('td'):
                     for elem in cells.descendants:
-                        if(isinstance(elem,str)):
+                        if(isinstance(elem,basestring)):
                             cellEntry.append(elem)
                     classEntry.append(cellEntry)
                     cellEntry=[]
