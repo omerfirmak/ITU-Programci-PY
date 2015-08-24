@@ -56,39 +56,33 @@ class ITU_Programci():
 
         #Bolum kodlari sutunu
         self.depLabel = Label(self.frame,text='Bolum')
-        self.depLabel.pack()
         self.depLabel.place(x=15,y=3)
 
         self.depCodeSpinner=[]
         for i in range(0,10):
             self.depCodeSpinner.append(Combobox(self.frame,width=6,state='readonly'))
             self.depCodeSpinner[i]['values']=depCodeList
-            self.depCodeSpinner[i].pack()
             self.depCodeSpinner[i].place(x=15,y=22*(i+1))
             self.depCodeSpinner[i].bind('<<ComboboxSelected>>',self.depCodeSelectedHandler)
 
         #Ders kodu sutunu
         self.classCodeLabel = Label(self.frame,text='Ders Kodu')
-        self.classCodeLabel.pack()
         self.classCodeLabel.place(x=95,y=3)
 
         self.classCodeSpinner=[]
         for i in range(0,10):
             self.classCodeSpinner.append(Combobox(self.frame,width=10,state='readonly'))
-            self.classCodeSpinner[i].pack()
             self.classCodeSpinner[i]['values']=['']
             self.classCodeSpinner[i].place(x=95,y=22*(i+1))
             self.classCodeSpinner[i].bind('<<ComboboxSelected>>',self.classCodeSelectedHandler)
 
         #Acilan dersler sutunu
         self.availClassLabel = Label(self.frame,text='Acilan Dersler')
-        self.availClassLabel.pack()
         self.availClassLabel.place(x=205,y=3)
 
         self.availClassSpinner=[]
         for i in range(0,10):
             self.availClassSpinner.append(Combobox(self.frame,width=75,state='readonly'))
-            self.availClassSpinner[i].pack()
             self.availClassSpinner[i]['values']=['']
             self.availClassSpinner[i].place(x=205,y=22*(i+1))
             self.availClassSpinner[i].bind('<<ComboboxSelected>>',self.updateSchedule)
@@ -97,18 +91,15 @@ class ITU_Programci():
         self.weekChart = []
         for i in range(0,14*5):
             self.weekChart.append(Label(self.frame,anchor='center',background='white',width=10))
-            self.weekChart[i].pack()
             self.weekChart[i].place(x=(90+85*math.floor(i/14)), y=270+20*(i%14))
         self.chartLabels=[]
         days=['Pazartesi','Sali','Carsamba','Persembe','Cuma']
         for i in range(0,5):
             self.chartLabels.append(Label(self.frame,text=days[i],anchor='center',width=10))
-            self.chartLabels[i].pack()
             self.chartLabels[i].place(x=90+i*85, y=250)
 
         for i in range(0, 14):
             self.chartLabels.append(Label(self.frame,text='{0}:30-{1}:29'.format(8+i,9+i),width=10,anchor='center'))
-            self.chartLabels[i+5].pack()
             self.chartLabels[i+5].place(x=5, y=270+20*(i%14))
 
     def reset(self):
