@@ -210,5 +210,6 @@ class ITU_Programci():
                 self.weekChart[i]['background']=temp[i]
                 self.weekChart[i]['text']= temp2[i]
 
-rand_col = ["#%03x" % random.randint(0, 0xFFF) for x in range(10)]
+os.chdir(os.path.dirname(sys.argv[0]))
+rand_col = ['#CE9090','#CE90CA','#B890CE','#9092CE','#90B9CE','#90CEB5','#90CE92','#C6CE90','#CEBC90','#919191']
 programci = ITU_Programci()
