@@ -33,12 +33,13 @@ class ITU_Programci():
 
         #Dosya Menusu
         self.fileMenu=Menu(self.menuBar,tearoff=0)
-        self.fileMenu.add_command(label='Denem1')
-        self.fileMenu.add_command(label='Denem2')
+        self.fileMenu.add_command(label='Ac')
+        self.fileMenu.add_command(label='Kaydet')
         self.menuBar.add_cascade(label="Dosya", menu=self.fileMenu)
 
         #Program Menusu
         self.progMenu=Menu(self.menuBar,tearoff=0)
+        self.progMenu.add_command(label='Sifirla', command=self.reset)
         self.progMenu.add_command(label='Veritabanini guncelle', command=self.updateDatabase)
         self.menuBar.add_cascade(label="Program", menu=self.progMenu)
 
@@ -108,6 +109,15 @@ class ITU_Programci():
             self.chartLabels.append(Label(self.frame,text='{0}:30-{1}:29'.format(8+i,9+i),width=10,anchor='center'))
             self.chartLabels[i+5].pack()
             self.chartLabels[i+5].place(x=5, y=270+20*(i%14))
+
+    def reset(self):
+        for index in range(0,10):
+            self.depCodeSpinner[index].current(0)
+            self.classCodeSpinner[index]['values'] = ['']
+            self.availClassSpinner[index]['values'] = ['']
+            self.classCodeSpinner[index].current(0)
+            self.availClassSpinner[index].current(0)
+        self.updateSchedule(None,index)
 
     def updateDatabase(self,firstBoot=False):
         if firstBoot:
@@ -190,6 +200,7 @@ class ITU_Programci():
                             event.widget.current(0)
                         else:
                             self.availClassSpinner[index].current(0)
+                        self.updateSchedule(event,index)
                         tkinter.messagebox.showinfo('Hata','Sectiginiz ders baska bir dersinizle cakismaktadir!')
                         return
         for i in range(0,70):
