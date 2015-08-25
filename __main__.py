@@ -3,11 +3,14 @@
 from Tkinter import *
 from ttk import *
 import tkMessageBox
+import tkFileDialog
+
 import sqlite3
 import time
 import os
 import math
 import random
+
 from ITUSIS_Parser import ITUSIS_Parser
 
 class ITU_Programci():
@@ -34,8 +37,8 @@ class ITU_Programci():
 
         #Dosya Menusu
         self.fileMenu=Menu(self.menuBar,tearoff=0)
-        self.fileMenu.add_command(label='Ac')
-        self.fileMenu.add_command(label='Kaydet')
+        self.fileMenu.add_command(label='Ac',command=self.load)
+        self.fileMenu.add_command(label='Kaydet',command=self.save)
         self.menuBar.add_cascade(label="Dosya", menu=self.fileMenu)
 
         #Program Menusu
@@ -132,16 +135,21 @@ class ITU_Programci():
             for i in range(0,10):
                 self.depCodeSpinner[i]['values']=depCodeList
 
-    def depCodeSelectedHandler(self,event):
-        #print('depCodeSelectedHandler')
-        depCode = event.widget.get()
-        index = int(event.widget.winfo_y()/22 -1)
+    def depCodeSelectedHandler(self,event,_index=None):
+        if _index != None:
+            index = _index
+            depCode = self.depCodeSpinner[index].get()
+        else:
+            index = int(event.widget.winfo_y()/22 -1)
+            depCode = event.widget.get()
+
         if depCode == '':
             self.classCodeSpinner[index]['values'] = ['']
             self.availClassSpinner[index]['values'] = ['']
             self.classCodeSpinner[index].current(0)
             self.availClassSpinner[index].current(0)
-            self.updateSchedule(None,index)
+            if event != None:
+                self.updateSchedule(None,index)
             return
 
         self.db.execute('select distinct Code from classes where Depcode=\'%s\'' % depCode)
@@ -152,16 +160,22 @@ class ITU_Programci():
         self.classCodeSpinner[index].current(0)
         self.availClassSpinner[index]['values'] = ['']
         self.availClassSpinner[index].current(0)
-        self.updateSchedule(None,index)
+        if event != None:
+            self.updateSchedule(None,index)
 
-    def classCodeSelectedHandler(self,event):
-        #print('classCodeSelectedHandler')
-        classCode = event.widget.get()
-        index = int(event.widget.winfo_y()/22 -1)
+    def classCodeSelectedHandler(self,event,_index=None):
+        if _index != None:
+            index = _index
+            classCode = self.classCodeSpinner[index].get()
+        else:
+            classCode = event.widget.get()
+            index = int(event.widget.winfo_y()/22 -1)
+
         if classCode == '':
             self.availClassSpinner[index]['values'] = ['']
             self.availClassSpinner[index].current(0)
-            self.updateSchedule(None,index)
+            if event != None:
+                self.updateSchedule(None,index)
             return
 
         self.db.execute('select CRN , Title , Inst  ,Build , Day ,Time  from classes where Code=\'%s\'' % classCode)
@@ -170,7 +184,8 @@ class ITU_Programci():
             availClassList.append('%s :: %s :: %s :: %s :: %s :: %s' % (elem[0],elem[1],elem[2],elem[4],elem[5],elem[3]))
         self.availClassSpinner[index]['values'] = availClassList
         self.availClassSpinner[index].current(0)
-        self.updateSchedule(None,index)
+        if event != None:
+            self.updateSchedule(None,index)
 
     def updateSchedule(self,event,index=None):
         temp = [0 for x in range(70)]
@@ -201,6 +216,38 @@ class ITU_Programci():
             if temp[i] != 0:
                 self.weekChart[i]['background']=temp[i]
                 self.weekChart[i]['text']= temp2[i]
+
+    def save(self):
+        fileName=tkFileDialog.asksaveasfilename(defaultextension='.ipsf',filetypes=[('Itu Programci Save File', '.ipsf')])
+        saveFile = open(fileName,'w')
+        list =[]
+        for i in range(0,10):
+            if self.availClassSpinner[i].get() != '':
+                list.append(self.availClassSpinner[i].get()[:5])
+
+        saveFile.write(','.join(list))
+        saveFile.close()
+
+    def load(self):
+        fileName=tkFileDialog.askopenfilename(defaultextension='.ipsf',filetypes=[('Itu Programci Save File', '.ipsf')])
+        saveFile = open(fileName,'r')
+        CrnList = saveFile.read().replace('\n','').split(',')
+        i=0
+        for CRN in CrnList:
+            self.db.execute('select Depcode,Code from classes where CRN=%s' % CRN)
+            query = self.db.fetchone()
+            self.depCodeSpinner[i].set(query[0])
+            self.depCodeSelectedHandler(None,i)
+            self.classCodeSpinner[i].set(query[1])
+            self.classCodeSelectedHandler(None,i)
+            for class_entry in self.availClassSpinner[i]['values']:
+                if class_entry[:5] == CRN:
+                    self.availClassSpinner[i].set(class_entry)
+                    break
+            i+=1
+        self.updateSchedule(None)
+
+
 
 rand_col = ['#CE9090','#CE90CA','#B890CE','#9092CE','#90B9CE','#90CEB5','#90CE92','#C6CE90','#CEBC90','#919191']
 programci = ITU_Programci()
