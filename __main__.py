@@ -6,7 +6,6 @@ import tkMessageBox
 import tkFileDialog
 
 import sqlite3
-import time
 import os
 import math
 import random
@@ -120,7 +119,7 @@ class ITU_Programci():
             root.withdraw()
             tkMessageBox.showinfo('Veritabani guncellemesi','Veritabani simdi guncellenecek. Bu islem yaklasik 1-2 dakika surecektir.')
         else:
-            ans= tkMessageBox.askquestion('Veritabani guncellemesi','Veritabanini simdi guncellemek istiyor musunuz?. Bu islem yaklasik 1 dakika surecektir.')
+            ans= tkMessageBox.askquestion('Veritabani guncellemesi','Veritabanini simdi guncellemek istiyor musunuz?. Bu islem yaklasik 1-2 dakika surecektir.')
             if ans=='no':
                 return
         self.db.close()

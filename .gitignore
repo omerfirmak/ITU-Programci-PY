@@ -3,3 +3,6 @@ __pycache__/
 ITUSIS_Parser.pyc
 classdb.sqlite
 main.py
+build/
+dist/
+__main__.spec
