@@ -847,10 +847,18 @@
     <property name="title">
      <string>&amp;Dosya</string>
     </property>
-    <addaction name="action_asdasd"/>
-    <addaction name="separator"/>
+    <addaction name="action_Ac"/>
+    <addaction name="action_Kaydet"/>
+   </widget>
+   <widget class="QMenu" name="menu_Program">
+    <property name="title">
+     <string>&amp;Program</string>
+    </property>
+    <addaction name="action_Sifirla"/>
+    <addaction name="action_Veritabanini_guncelle"/>
    </widget>
    <addaction name="menuDosya"/>
+   <addaction name="menu_Program"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="toolTip">
@@ -862,7 +870,27 @@
   </widget>
   <action name="action_asdasd">
    <property name="text">
-    <string>&amp;asdasd</string>
+    <string>&amp;Ac</string>
+   </property>
+  </action>
+  <action name="action_Sifirla">
+   <property name="text">
+    <string>&amp;Sifirla</string>
+   </property>
+  </action>
+  <action name="action_Veritabanini_guncelle">
+   <property name="text">
+    <string>&amp;Veritabanini guncelle</string>
+   </property>
+  </action>
+  <action name="action_Ac">
+   <property name="text">
+    <string>&amp;Ac</string>
+   </property>
+  </action>
+  <action name="action_Kaydet">
+   <property name="text">
+    <string>&amp;Kaydet</string>
    </property>
   </action>
  </widget>

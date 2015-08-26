@@ -12,8 +12,6 @@ from ITUSIS_Parser import ITUSIS_Parser
 
 class ITU_Programci():
     def __init__(self):
-        self.databaseUpdateUnderway=False
-
         self.app = QtWidgets.QApplication(sys.argv)
         self.ui = ui.Ui_MainWindow()
         self.ui.show()
@@ -26,22 +24,27 @@ class ITU_Programci():
 
     def initDbConnection(self):
         if not os.path.isfile('classdb.sqlite'):
+            self.firstBoot = True
             self.createDatabaseUpdateThread(self.ui.statusbar)
+        else:
+            self.firstBoot = False
+
         self.conn=sqlite3.connect('classdb.sqlite',check_same_thread=False)
         self.db=self.conn.cursor()
 
     def createDatabaseUpdateThread(self,statusbar):
         databaseUpdateThread = threading.Thread(target=self.updateDatabase, args=(statusbar,))
-        self.databaseUpdateUnderway=True
+        self.clearAndChangeStateOfComboBoxes()
         databaseUpdateThread.start()
 
     def updateDatabase(self,statusbar):
         ITUSIS_Parser(statusbar).getClasses()
-        self.databaseUpdateUnderway=False
+        self.clearAndChangeStateOfComboBoxes()
+        self.firstBoot = False
         self.initDepCodeComboBoxes()
 
     def initDepCodeComboBoxes(self):
-        if self.databaseUpdateUnderway:
+        if self.firstBoot:
             return
         depCodeList=['']
         for code in self.db.execute('select distinct Depcode from classes'):
@@ -60,9 +63,6 @@ class ITU_Programci():
                 obj.currentIndexChanged.connect(handlers[j])
 
     def depCodeSelectedHandler(self):
-        if self.databaseUpdateUnderway:
-            return
-
         senderComboBox = self.ui.sender()
         index = senderComboBox.objectName().split('_')[1]
         depCode = senderComboBox.currentText()
@@ -82,9 +82,6 @@ class ITU_Programci():
         nextComboBox.addItems(classCodeList)
 
     def classCodeSelectedHandler(self):
-        if self.databaseUpdateUnderway:
-            return
-
         senderComboBox = self.ui.sender()
         index = senderComboBox.objectName().split('_')[1]
         classCode = senderComboBox.currentText()
@@ -106,9 +103,16 @@ class ITU_Programci():
         pass
 
 
+    def clearAndChangeStateOfComboBoxes(self):
+        name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
+        for i in range(0,10):
+            for j in range(0,3):
+                obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
+                obj.clear()
+                obj.setEnabled(not obj.isEnabled())
+
+
 ITU_Programci()
-
-
 
 
 

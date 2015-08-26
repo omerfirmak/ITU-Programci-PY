@@ -37,7 +37,7 @@ class ITUSIS_Parser:
     def getClasses(self):
         for dep in self.getDepartmentCodes():
             if self.statusbar != None:
-                self.statusbar.showMessage(dep)
+                self.statusbar.showMessage('%s guncelleniyor.' % dep)
             classList=[]
             classEntry=[]
             cellEntry=[]
@@ -55,6 +55,7 @@ class ITUSIS_Parser:
                 classList.append(classEntry)
                 classEntry=[]
             self.addToDatabase(classList,dep)
+        self.statusbar.showMessage('Guncelleme bitti.')
         self.db.close()
 
     def addToDatabase(self,data,dep):
