@@ -5,21 +5,21 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import sys
-
-reload(sys)
-sys.setdefaultencoding('utf-8')
+from PyQt5 import QtCore, QtGui, QtWidgets
 
 class ITUSIS_Parser:
     days=['Pa','Sa','Ça','Pe','Cu']
-    def __init__(self):
+    def __init__(self,statusbar=None):
+        reload(sys)
+        sys.setdefaultencoding('utf-8')
+        self.statusbar = statusbar
+        self.db=sqlite3.connect('classdb.sqlite',check_same_thread=False)
+        self.cur=self.db.cursor()
         try:
-            os.remove('classdb.sqlite')
+            self.cur.execute('DROP TABLE classes')
         except:
             pass
-        self.db=sqlite3.connect('classdb.sqlite')
-        self.cur=self.db.cursor()
-        self.cur.execute('''CREATE TABLE classes
-        (Depcode TEXT, CRN TEXT, Code TEXT, Title TEXT, Inst TEXT ,Build TEXT, ClassTime TEXT,Restr TEXT,Day TEXT, Time TEXT )''')
+        self.cur.execute('CREATE TABLE classes (Depcode TEXT, CRN TEXT, Code TEXT, Title TEXT, Inst TEXT ,Build TEXT, ClassTime TEXT,Restr TEXT,Day TEXT, Time TEXT )')
 
 
     def getDepartmentCodes(self):
@@ -36,6 +36,8 @@ class ITUSIS_Parser:
 
     def getClasses(self):
         for dep in self.getDepartmentCodes():
+            if self.statusbar != None:
+                self.statusbar.showMessage(dep)
             classList=[]
             classEntry=[]
             cellEntry=[]
@@ -53,6 +55,7 @@ class ITUSIS_Parser:
                 classList.append(classEntry)
                 classEntry=[]
             self.addToDatabase(classList,dep)
+        self.db.close()
 
     def addToDatabase(self,data,dep):
         for classEntry in data:
