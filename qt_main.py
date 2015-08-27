@@ -8,6 +8,7 @@ import threading
 import os
 import math
 import random
+import functools
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -65,6 +66,9 @@ class ITU_Programci():
                 obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
                 obj.currentIndexChanged.connect(handlers[j])
 
+        self.ui.action_Sifirla.triggered.connect(self.reset)
+        self.ui.action_Veritabanini_guncelle.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
+
     def depCodeSelectedHandler(self):
         senderComboBox = self.ui.sender()
         index = senderComboBox.objectName().split('_')[1]
@@ -118,8 +122,9 @@ class ITU_Programci():
                         timeSlots[j] = self.ui.findChild(QtWidgets.QComboBox,'classCodeComboBox_%d' % i).currentText()
                         colorArr[j] = rand_col[i]
                     else:
-                        msgbox = QtWidgets.QMessageBox()
+                        msgbox = QtWidgets.QMessageBox(self.ui)
                         msgbox.setText('Sectiginiz ders baska bir dersinizle cakismaktadir!')
+                        msgbox.setWindowTitle('Hata!')
                         msgbox.show()
                         availClassComboBox.setCurrentIndex(0)
                         return
@@ -128,9 +133,8 @@ class ITU_Programci():
             item.setText(timeSlots[i])
             if timeSlots[i] != '':
                 item.setBackground(colorArr[i])
-
-            #print(self.ui.schedule.itemAt(i%14,math.floor(i/14)).text())
-
+            else:
+                item.setBackground(QtGui.QColor('white'))
 
     def clearAndChangeStateOfComboBoxes(self):
         name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
@@ -139,6 +143,16 @@ class ITU_Programci():
                 obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
                 obj.clear()
                 obj.setEnabled(not obj.isEnabled())
+
+    def reset(self):
+        name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
+        for i in range(0,10):
+            for j in range(0,3):
+                obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
+                if j == 0:
+                    obj.setCurrentIndex(0)
+                else:
+                    obj.clear()
 
 rand_col=[]
 for i in range(0,10):
