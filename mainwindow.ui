@@ -51,6 +51,9 @@
       <height>451</height>
      </rect>
     </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::NoEditTriggers</set>
+    </property>
     <property name="gridStyle">
      <enum>Qt::SolidLine</enum>
     </property>

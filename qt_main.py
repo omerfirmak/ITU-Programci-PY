@@ -6,6 +6,9 @@ import sys
 import sqlite3
 import threading
 import os
+import math
+import random
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 from ITUSIS_Parser import ITUSIS_Parser
@@ -66,7 +69,6 @@ class ITU_Programci():
         senderComboBox = self.ui.sender()
         index = senderComboBox.objectName().split('_')[1]
         depCode = senderComboBox.currentText()
-
         nextComboBox = self.ui.findChild(QtWidgets.QComboBox,'classCodeComboBox_%s' % index)
 
         if depCode == '':
@@ -100,7 +102,34 @@ class ITU_Programci():
         nextComboBox.addItems(availClassList)
 
     def classSelectedHandler(self):
-        pass
+        timeSlots=['' for x in range(0,70)]
+        colorArr = ['' for x in range(0,70)]
+        for i in range(0,10):
+            availClassComboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
+            classInfo = availClassComboBox.currentText()
+            if classInfo == '':
+                continue
+            CRN = classInfo[:5]
+            self.db.execute(('select ClassTime  from classes where CRN=\'%s\'' % CRN))
+            for block in self.db.fetchone()[0].split(','):
+                start_stop = block.split('-')
+                for j in range(int(start_stop[0]),int(start_stop[1])):
+                    if timeSlots[j] == '':
+                        timeSlots[j] = self.ui.findChild(QtWidgets.QComboBox,'classCodeComboBox_%d' % i).currentText()
+                        colorArr[j] = rand_col[i]
+                    else:
+                        msgbox = QtWidgets.QMessageBox()
+                        msgbox.setText('Sectiginiz ders baska bir dersinizle cakismaktadir!')
+                        msgbox.show()
+                        availClassComboBox.setCurrentIndex(0)
+                        return
+        for i in range(0,70):
+            item = self.ui.schedule.item(i%14,math.floor(i/14))
+            item.setText(timeSlots[i])
+            if timeSlots[i] != '':
+                item.setBackground(colorArr[i])
+
+            #print(self.ui.schedule.itemAt(i%14,math.floor(i/14)).text())
 
 
     def clearAndChangeStateOfComboBoxes(self):
@@ -111,9 +140,10 @@ class ITU_Programci():
                 obj.clear()
                 obj.setEnabled(not obj.isEnabled())
 
-
+rand_col=[]
+for i in range(0,10):
+    rand_col.append(QtGui.QColor.fromRgbF(random.randint(150,255)/255.0,random.randint(150,255)/255.0,random.randint(150,255)/255.0))
 ITU_Programci()
-
 
 
 
@@ -122,5 +152,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)
         self.setupUi(self)
+
+
+
+    for i in range(0,70):
+        self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
 
 '''

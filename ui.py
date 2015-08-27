@@ -5,7 +5,7 @@
 # Created by: PyQt5 UI code generator 5.5
 #
 # WARNING! All changes made in this file will be lost!
-
+import math
 from PyQt5 import QtCore, QtGui, QtWidgets
 
 class Ui_MainWindow(QtWidgets.QMainWindow):
@@ -27,6 +27,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.schedule = QtWidgets.QTableWidget(self.centralwidget)
         self.schedule.setEnabled(True)
         self.schedule.setGeometry(QtCore.QRect(10, 330, 606, 451))
+        self.schedule.setEditTriggers(QtWidgets.QAbstractItemView.NoEditTriggers)
         self.schedule.setGridStyle(QtCore.Qt.SolidLine)
         self.schedule.setRowCount(14)
         self.schedule.setColumnCount(5)
@@ -282,6 +283,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menu_Program.addAction(self.action_Veritabanini_guncelle)
         self.menubar.addAction(self.menuDosya.menuAction())
         self.menubar.addAction(self.menu_Program.menuAction())
+
+        for i in range(0,70):
+            self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
