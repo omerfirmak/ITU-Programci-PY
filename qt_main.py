@@ -116,6 +116,8 @@ class ITU_Programci():
             CRN = classInfo[:5]
             self.db.execute(('select ClassTime  from classes where CRN=\'%s\'' % CRN))
             for block in self.db.fetchone()[0].split(','):
+                if block == 'Undefined':
+                    continue
                 start_stop = block.split('-')
                 for j in range(int(start_stop[0]),int(start_stop[1])):
                     if timeSlots[j] == '':
