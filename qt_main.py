@@ -66,8 +66,8 @@ class ITU_Programci():
                 obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
                 obj.currentIndexChanged.connect(handlers[j])
 
-        self.ui.action_Sifirla.triggered.connect(self.reset)
-        self.ui.action_Veritabanini_guncelle.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
+        self.ui.action_Reset.triggered.connect(self.reset)
+        self.ui.action_Update_database.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
 
     def depCodeSelectedHandler(self):
         senderComboBox = self.ui.sender()
