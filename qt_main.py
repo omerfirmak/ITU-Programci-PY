@@ -164,6 +164,8 @@ ITU_Programci()
 
 
 '''
+import math
+
 class Ui_MainWindow(QtWidgets.QMainWindow):
     def __init__(self):
         QtWidgets.QMainWindow.__init__(self)

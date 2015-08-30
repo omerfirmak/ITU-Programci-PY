@@ -10,8 +10,14 @@
     <x>0</x>
     <y>0</y>
     <width>958</width>
-    <height>859</height>
+    <height>793</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>ITU Programci</string>
@@ -21,9 +27,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>30</y>
+      <y>20</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -46,10 +52,36 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>340</y>
-      <width>606</width>
-      <height>451</height>
+      <y>230</y>
+      <width>472</width>
+      <height>377</height>
      </rect>
+    </property>
+    <property name="sizePolicy">
+     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+      <horstretch>0</horstretch>
+      <verstretch>0</verstretch>
+     </sizepolicy>
+    </property>
+    <property name="minimumSize">
+     <size>
+      <width>0</width>
+      <height>0</height>
+     </size>
+    </property>
+    <property name="maximumSize">
+     <size>
+      <width>16777215</width>
+      <height>16777215</height>
+     </size>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>9</pointsize>
+     </font>
+    </property>
+    <property name="lineWidth">
+     <number>1</number>
     </property>
     <property name="editTriggers">
      <set>QAbstractItemView::NoEditTriggers</set>
@@ -63,6 +95,21 @@
     <property name="columnCount">
      <number>5</number>
     </property>
+    <attribute name="horizontalHeaderCascadingSectionResizes">
+     <bool>false</bool>
+    </attribute>
+    <attribute name="horizontalHeaderDefaultSectionSize">
+     <number>77</number>
+    </attribute>
+    <attribute name="horizontalHeaderMinimumSectionSize">
+     <number>23</number>
+    </attribute>
+    <attribute name="verticalHeaderVisible">
+     <bool>true</bool>
+    </attribute>
+    <attribute name="verticalHeaderDefaultSectionSize">
+     <number>25</number>
+    </attribute>
     <row>
      <property name="text">
       <string>8:30-9:29</string>
@@ -163,9 +210,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>40</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -185,9 +232,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>90</y>
+      <y>60</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -207,9 +254,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>120</y>
+      <y>80</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -229,9 +276,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>100</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -251,9 +298,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>180</y>
+      <y>120</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -273,9 +320,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>210</y>
+      <y>140</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -295,9 +342,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>240</y>
+      <y>160</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -317,9 +364,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>270</y>
+      <y>180</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -339,9 +386,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>300</y>
+      <y>200</y>
       <width>85</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -361,9 +408,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>30</y>
+      <y>20</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -383,9 +430,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>60</y>
+      <y>40</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -405,9 +452,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>90</y>
+      <y>60</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -427,9 +474,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>120</y>
+      <y>80</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -449,9 +496,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>150</y>
+      <y>100</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -471,9 +518,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>180</y>
+      <y>120</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -493,9 +540,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>210</y>
+      <y>140</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -515,9 +562,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>240</y>
+      <y>160</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -537,9 +584,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>270</y>
+      <y>180</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -559,9 +606,9 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>300</y>
+      <y>200</y>
       <width>101</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -581,9 +628,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>30</y>
+      <y>20</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -603,9 +650,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>60</y>
+      <y>40</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -625,9 +672,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>90</y>
+      <y>60</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -647,9 +694,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>120</y>
+      <y>80</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -669,9 +716,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>150</y>
+      <y>100</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -691,9 +738,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>180</y>
+      <y>120</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -713,9 +760,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>210</y>
+      <y>140</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -735,9 +782,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>240</y>
+      <y>160</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -757,9 +804,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>270</y>
+      <y>180</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -779,9 +826,9 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>300</y>
+      <y>200</y>
       <width>741</width>
-      <height>25</height>
+      <height>20</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -801,7 +848,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>10</y>
+      <y>0</y>
       <width>67</width>
       <height>21</height>
      </rect>
@@ -814,7 +861,7 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>10</y>
+      <y>0</y>
       <width>91</width>
       <height>21</height>
      </rect>
@@ -827,7 +874,7 @@
     <property name="geometry">
      <rect>
       <x>210</x>
-      <y>10</y>
+      <y>0</y>
       <width>331</width>
       <height>21</height>
      </rect>
