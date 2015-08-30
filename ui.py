@@ -17,7 +17,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
         MainWindow.setEnabled(True)
-        MainWindow.resize(958, 793)
+        MainWindow.resize(958, 674)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -91,8 +91,10 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.schedule.horizontalHeader().setCascadingSectionResizes(False)
         self.schedule.horizontalHeader().setDefaultSectionSize(77)
         self.schedule.horizontalHeader().setMinimumSectionSize(23)
+        self.schedule.horizontalHeader().setStretchLastSection(True)
         self.schedule.verticalHeader().setVisible(True)
         self.schedule.verticalHeader().setDefaultSectionSize(25)
+        self.schedule.verticalHeader().setStretchLastSection(True)
         self.depCodeComboBox_1 = QtWidgets.QComboBox(self.centralwidget)
         self.depCodeComboBox_1.setGeometry(QtCore.QRect(10, 40, 85, 20))
         self.depCodeComboBox_1.setStyleSheet("combobox-popup: 0;")
@@ -306,6 +308,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menu_Program.addAction(self.action_Update_database)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menu_Program.menuAction())
+
         for i in range(0,70):
             self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
 

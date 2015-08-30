@@ -163,7 +163,7 @@ class ITU_Programci():
             width += self.ui.schedule.columnWidth(i)
 
         width += self.ui.schedule.verticalHeader().sizeHint().width()
-        width += self.ui.schedule.verticalScrollBar().sizeHint().width()/4
+        width += self.ui.schedule.verticalScrollBar().sizeHint().width()/6
 
         height=0
 
@@ -171,7 +171,7 @@ class ITU_Programci():
             height += self.ui.schedule.rowHeight(i)
 
         height += self.ui.schedule.horizontalHeader().sizeHint().height()
-        height += self.ui.schedule.horizontalScrollBar().sizeHint().height()/4
+        height += self.ui.schedule.horizontalScrollBar().sizeHint().height()/6
 
         self.ui.schedule.resize(width,height)
 
