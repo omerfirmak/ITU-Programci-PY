@@ -90,7 +90,7 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.schedule.setHorizontalHeaderItem(4, item)
         self.schedule.horizontalHeader().setCascadingSectionResizes(False)
         self.schedule.horizontalHeader().setDefaultSectionSize(77)
-        self.schedule.horizontalHeader().setMinimumSectionSize(23)
+        self.schedule.horizontalHeader().setMinimumSectionSize(77)
         self.schedule.horizontalHeader().setStretchLastSection(True)
         self.schedule.verticalHeader().setVisible(True)
         self.schedule.verticalHeader().setDefaultSectionSize(25)
@@ -308,7 +308,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menu_Program.addAction(self.action_Update_database)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menu_Program.menuAction())
-
         for i in range(0,70):
             self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
 

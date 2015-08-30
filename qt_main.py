@@ -158,6 +158,7 @@ class ITU_Programci():
                     obj.clear()
 
     def resizeTableWidget(self):
+        self.ui.schedule.resizeColumnsToContents()
         width = 0
         for i in range(self.ui.schedule.columnCount()):
             width += self.ui.schedule.columnWidth(i)
