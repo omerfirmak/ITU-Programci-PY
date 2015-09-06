@@ -45,173 +45,6 @@
      </size>
     </property>
    </widget>
-   <widget class="QTableWidget" name="schedule">
-    <property name="enabled">
-     <bool>true</bool>
-    </property>
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>230</y>
-      <width>472</width>
-      <height>377</height>
-     </rect>
-    </property>
-    <property name="sizePolicy">
-     <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
-      <horstretch>0</horstretch>
-      <verstretch>0</verstretch>
-     </sizepolicy>
-    </property>
-    <property name="minimumSize">
-     <size>
-      <width>0</width>
-      <height>0</height>
-     </size>
-    </property>
-    <property name="maximumSize">
-     <size>
-      <width>16777215</width>
-      <height>16777215</height>
-     </size>
-    </property>
-    <property name="font">
-     <font>
-      <pointsize>9</pointsize>
-     </font>
-    </property>
-    <property name="lineWidth">
-     <number>1</number>
-    </property>
-    <property name="editTriggers">
-     <set>QAbstractItemView::NoEditTriggers</set>
-    </property>
-    <property name="gridStyle">
-     <enum>Qt::SolidLine</enum>
-    </property>
-    <property name="rowCount">
-     <number>14</number>
-    </property>
-    <property name="columnCount">
-     <number>5</number>
-    </property>
-    <attribute name="horizontalHeaderCascadingSectionResizes">
-     <bool>false</bool>
-    </attribute>
-    <attribute name="horizontalHeaderDefaultSectionSize">
-     <number>77</number>
-    </attribute>
-    <attribute name="horizontalHeaderMinimumSectionSize">
-     <number>77</number>
-    </attribute>
-    <attribute name="horizontalHeaderStretchLastSection">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="verticalHeaderVisible">
-     <bool>true</bool>
-    </attribute>
-    <attribute name="verticalHeaderDefaultSectionSize">
-     <number>25</number>
-    </attribute>
-    <attribute name="verticalHeaderStretchLastSection">
-     <bool>true</bool>
-    </attribute>
-    <row>
-     <property name="text">
-      <string>8:30-9:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>9:30-10:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>10:30-11:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>11:30-12:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>12:30-13:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>13:30-14:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>14:30-15:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>15:30-16:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>16:30-17:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>17:30-18:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>18:30-19:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>19:30-20:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>20:30-21:29</string>
-     </property>
-    </row>
-    <row>
-     <property name="text">
-      <string>21:30-22:29</string>
-     </property>
-    </row>
-    <column>
-     <property name="text">
-      <string>Pazartesi</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Sali</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Carsamba</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Persembe</string>
-     </property>
-    </column>
-    <column>
-     <property name="text">
-      <string>Cuma</string>
-     </property>
-    </column>
-   </widget>
    <widget class="QComboBox" name="depCodeComboBox_1">
     <property name="geometry">
      <rect>
@@ -889,6 +722,117 @@
      <string>Acilan Dersler</string>
     </property>
    </widget>
+   <widget class="QTableWidget" name="schedule">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>230</y>
+      <width>256</width>
+      <height>192</height>
+     </rect>
+    </property>
+    <property name="rowCount">
+     <number>14</number>
+    </property>
+    <property name="columnCount">
+     <number>5</number>
+    </property>
+    <row>
+     <property name="text">
+      <string>8:30-9:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>9:30-10:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>10:30-11:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>11:30-12:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>12:30-13:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>13:30-14:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>14:30-15:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>15:30-16:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>16:30-17:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>17:30-18:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>18:30-19:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>19:30-20:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>20:30-21:29</string>
+     </property>
+    </row>
+    <row>
+     <property name="text">
+      <string>21:30-22:29</string>
+     </property>
+    </row>
+    <column>
+     <property name="text">
+      <string>Pazartesi</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Salı</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Çarşamba</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Perşembe</string>
+     </property>
+    </column>
+    <column>
+     <property name="text">
+      <string>Cuma</string>
+     </property>
+    </column>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -896,7 +840,7 @@
      <x>0</x>
      <y>0</y>
      <width>958</width>
-     <height>29</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">

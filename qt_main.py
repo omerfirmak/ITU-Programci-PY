@@ -19,7 +19,7 @@ class ITU_Programci():
         self.app = QtWidgets.QApplication(sys.argv)
         self.ui = ui.Ui_MainWindow()
         self.ui.show()
-        self.resizeTableWidget()
+        self.resizeWidgets()
         self.initDbConnection()
         self.initDepCodeComboBoxes()
         self.connectHandlers()
@@ -157,25 +157,23 @@ class ITU_Programci():
                 else:
                     obj.clear()
 
-    def resizeTableWidget(self):
-        self.ui.schedule.resizeColumnsToContents()
+    def resizeWidgets(self):
+        #TableWidget
+        #self.ui.schedule.resizeColumnsToContents()
         width = 0
         for i in range(self.ui.schedule.columnCount()):
             width += self.ui.schedule.columnWidth(i)
-
         width += self.ui.schedule.verticalHeader().sizeHint().width()
         width += self.ui.schedule.verticalScrollBar().sizeHint().width()/6
-
         height=0
-
         for i in range(self.ui.schedule.rowCount()):
             height += self.ui.schedule.rowHeight(i)
-
         height += self.ui.schedule.horizontalHeader().sizeHint().height()
         height += self.ui.schedule.horizontalScrollBar().sizeHint().height()/6
-
         self.ui.schedule.resize(width,height)
 
+        #MainWindow
+        self.ui.setFixedHeight(self.ui.schedule.geometry().bottom()+40)
 
 rand_col=[]
 for i in range(0,10):
