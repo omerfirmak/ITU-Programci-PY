@@ -70,6 +70,8 @@ class ITU_Programci():
         self.ui.action_Reset.triggered.connect(self.reset)
         self.ui.action_Update_database.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
         self.ui.action_Save.triggered.connect(self.save)
+        self.ui.action_Load.triggered.connect(self.load)
+
 
     def depCodeSelectedHandler(self):
         senderComboBox = self.ui.sender()
@@ -143,7 +145,9 @@ class ITU_Programci():
 
     def save(self):
         classList=[]
-        fileName = QtWidgets.QFileDialog.getSaveFileName(self.ui,'Kayıt dosyasını aç');
+        fileName = QtWidgets.QFileDialog.getSaveFileName(self.ui,'Kayıt dosyasını sec');
+        if fileName[0] == '':
+            return
         saveFile = open(fileName[0],'w')
         for i in range(0,10):
             classEntry = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i).currentText()
@@ -151,6 +155,25 @@ class ITU_Programci():
                 classList.append(classEntry[:5])
         saveFile.write(','.join(classList))
         saveFile.close()
+
+    def load(self):
+        fileName = QtWidgets.QFileDialog.getOpenFileName(self.ui,'Kayıt dosyasını sec');
+        if fileName[0] == '':
+            return
+        saveFile = open(fileName[0],'r')
+        crnList = saveFile.read().replace('\n','').split(',')
+        i=0
+        for CRN in crnList:
+            self.db.execute('select Depcode,Code from classes where CRN=%s' % CRN)
+            query = self.db.fetchone()
+            obj = self.ui.findChild(QtWidgets.QComboBox,'depCodeComboBox_%d' % i)
+            obj.setCurrentText(query[0])
+            obj = self.ui.findChild(QtWidgets.QComboBox,'classCodeComboBox_%d' % i)
+            obj.setCurrentText(query[1])
+            obj = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
+            obj.setCurrentIndex(obj.findText(CRN,flags=QtCore.Qt.MatchStartsWith))
+            i+=1
+
 
     def reset(self):
         name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
