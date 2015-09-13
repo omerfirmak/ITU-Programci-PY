@@ -69,6 +69,7 @@ class ITU_Programci():
 
         self.ui.action_Reset.triggered.connect(self.reset)
         self.ui.action_Update_database.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
+        self.ui.action_Save.triggered.connect(self.save)
 
     def depCodeSelectedHandler(self):
         senderComboBox = self.ui.sender()
@@ -107,6 +108,7 @@ class ITU_Programci():
         nextComboBox.addItems(availClassList)
 
     def classSelectedHandler(self):
+        senderComboBox = self.ui.sender()
         timeSlots=['' for x in range(0,70)]
         colorArr = ['' for x in range(0,70)]
         for i in range(0,10):
@@ -129,7 +131,7 @@ class ITU_Programci():
                         msgbox.setText('Sectiginiz ders baska bir dersinizle cakismaktadir!')
                         msgbox.setWindowTitle('Hata!')
                         msgbox.show()
-                        availClassComboBox.setCurrentIndex(0)
+                        senderComboBox.setCurrentIndex(0)
                         return
         for i in range(0,70):
             item = self.ui.schedule.item(i%14,math.floor(i/14))
@@ -139,13 +141,16 @@ class ITU_Programci():
             else:
                 item.setBackground(QtGui.QColor('white'))
 
-    def clearAndChangeStateOfComboBoxes(self):
-        name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
+    def save(self):
+        classList=[]
+        fileName = QtWidgets.QFileDialog.getSaveFileName(self.ui,'Kayıt dosyasını aç');
+        saveFile = open(fileName[0],'w')
         for i in range(0,10):
-            for j in range(0,3):
-                obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
-                obj.clear()
-                obj.setEnabled(not obj.isEnabled())
+            classEntry = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i).currentText()
+            if classEntry != '':
+                classList.append(classEntry[:5])
+        saveFile.write(','.join(classList))
+        saveFile.close()
 
     def reset(self):
         name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
@@ -157,9 +162,16 @@ class ITU_Programci():
                 else:
                     obj.clear()
 
+    def clearAndChangeStateOfComboBoxes(self):
+        name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
+        for i in range(0,10):
+            for j in range(0,3):
+                obj = self.ui.findChild(QtWidgets.QComboBox, name[j] % i)
+                obj.clear()
+                obj.setEnabled(not obj.isEnabled())
+
     def resizeWidgets(self):
         #TableWidget
-        #self.ui.schedule.resizeColumnsToContents()
         width = 0
         for i in range(self.ui.schedule.columnCount()):
             width += self.ui.schedule.columnWidth(i)
