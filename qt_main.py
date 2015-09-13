@@ -173,7 +173,7 @@ class ITU_Programci():
         self.ui.schedule.resize(width,height)
 
         #MainWindow
-        self.ui.setFixedHeight(self.ui.schedule.geometry().bottom()+40)
+        #self.ui.setFixedHeight(self.ui.schedule.geometry().bottom()+40)
 
 rand_col=[]
 for i in range(0,10):
