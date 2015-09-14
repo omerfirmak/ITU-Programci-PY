@@ -72,7 +72,6 @@ class ITU_Programci():
         self.ui.action_Save.triggered.connect(self.save)
         self.ui.action_Load.triggered.connect(self.load)
 
-
     def depCodeSelectedHandler(self):
         senderComboBox = self.ui.sender()
         index = senderComboBox.objectName().split('_')[1]
@@ -162,6 +161,9 @@ class ITU_Programci():
             return
         saveFile = open(fileName[0],'r')
         crnList = saveFile.read().replace('\n','').split(',')
+        self.fillClassInfo(crnList)
+
+    def fillClassInfo(self,crnList):
         i=0
         for CRN in crnList:
             self.db.execute('select Depcode,Code from classes where CRN=%s' % CRN)
@@ -173,7 +175,6 @@ class ITU_Programci():
             obj = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
             obj.setCurrentIndex(obj.findText(CRN,flags=QtCore.Qt.MatchStartsWith))
             i+=1
-
 
     def reset(self):
         name = ['depCodeComboBox_%d','classCodeComboBox_%d','availClassComboBox_%d']
