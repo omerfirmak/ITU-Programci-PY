@@ -55,13 +55,14 @@ class ITUSIS_Parser:
                 classList.append(classEntry)
                 classEntry=[]
             self.addToDatabase(classList,dep)
-        self.statusbar.showMessage('Guncelleme bitti.')
+        if self.statusbar != None:
+            self.statusbar.showMessage('Guncelleme bitti.')
         self.db.close()
 
     def addToDatabase(self,data,dep):
         for classEntry in data:
             insert_query="INSERT INTO classes VALUES ('{0}','{1}','{2}','{3}','{4}','{5}','{6}','{7}','{8}','{9}')".format(dep,classEntry[0][0],classEntry[1][0],
-            classEntry[2][0].replace('\'',''),classEntry[3][0],','.join(classEntry[4]),self.calcClassTime(classEntry[5],classEntry[6]),
+            classEntry[2][0].replace('\'',''),classEntry[3][0].replace('\'',''),','.join(classEntry[4]),self.calcClassTime(classEntry[5],classEntry[6]),
             classEntry[11][0],','.join(classEntry[5]),','.join(classEntry[6]))
             self.cur.execute(insert_query)
         self.db.commit()
