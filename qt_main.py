@@ -136,7 +136,7 @@ class ITU_Programci():
         if index <=0:
             return
 
-        print(self.scheduleList)
+        print(self.scheduleList[index-1])
         self.fillClassInfo(self.scheduleList[index-1])
 
     def isValidSchedule(self,crnList):
@@ -190,6 +190,10 @@ class ITU_Programci():
         self.fillClassInfo(crnList)
 
     def fillClassInfo(self,crnList):
+        for i in range(0,10):
+            comboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
+            comboBox.setCurrentIndex(0)
+
         i=0
         for CRN in crnList:
             self.db.execute('select Depcode,Code from classes where CRN=%s' % CRN)
