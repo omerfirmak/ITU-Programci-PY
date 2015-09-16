@@ -11,7 +11,6 @@ import random
 import functools
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 from ITUSIS_Parser import ITUSIS_Parser
 
 class ITU_Programci():
@@ -23,6 +22,8 @@ class ITU_Programci():
         self.initDbConnection()
         self.initDepCodeComboBoxes()
         self.connectHandlers()
+        self.cache = {}
+        self.count=0
         sys.exit(self.app.exec_())
         return
 
@@ -37,6 +38,7 @@ class ITU_Programci():
         self.db=self.conn.cursor()
 
     def createDatabaseUpdateThread(self,statusbar):
+        self.cache = {}
         databaseUpdateThread = threading.Thread(target=self.updateDatabase, args=(statusbar,))
         self.clearAndChangeStateOfComboBoxes()
         databaseUpdateThread.start()
@@ -144,8 +146,13 @@ class ITU_Programci():
         colorArr=['' for x in range(0,70)]
         i=0
         for CRN in crnList:
-            self.db.execute(('select ClassTime,Code  from classes where CRN=\'%s\'' % CRN))
-            query = self.db.fetchone()
+            if CRN in self.cache:
+                query = self.cache[CRN]
+            else:
+                self.db.execute(('select ClassTime,Code from classes where CRN=\'%s\'' % CRN))
+                query = self.db.fetchone()
+                self.cache[CRN] = query
+
             for block in query[0].split(','):
                 if block == 'Undefined':
                     continue
@@ -265,12 +272,11 @@ class ITU_Programci():
                     if not self.isValidSchedule(crnList+[CRN])[0]:
                         continue
                     self.createPossibleSchedules(checked,crnList+[CRN],timeSlots,index+1)
-
+count=0
 rand_col=[]
 for i in range(0,10):
     rand_col.append(QtGui.QColor.fromRgbF(random.randint(150,255)/255.0,random.randint(150,255)/255.0,random.randint(150,255)/255.0))
 ITU_Programci()
-
 
 
 '''
