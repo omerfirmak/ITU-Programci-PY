@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'mainwindow.ui'
+# Form implementation generated from reading ui file '/Users/omerirmak/Dropbox/PythonWorkspace/ITU-Programci-PY/mainwindow.ui'
 #
 # Created by: PyQt5 UI code generator 5.5
 #
@@ -259,9 +259,16 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.schedule.setHorizontalHeaderItem(3, item)
         item = QtWidgets.QTableWidgetItem()
         self.schedule.setHorizontalHeaderItem(4, item)
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(840, 230, 93, 29))
+        self.pushButton.setObjectName("pushButton")
+        self.scheduleCombobox = QtWidgets.QComboBox(self.centralwidget)
+        self.scheduleCombobox.setGeometry(QtCore.QRect(830, 260, 104, 21))
+        self.scheduleCombobox.setObjectName("scheduleCombobox")
+        self.scheduleCombobox.setStyleSheet("combobox-popup: 0;")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 958, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 958, 22))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
@@ -273,8 +280,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.statusbar.setSizeGripEnabled(True)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-        self.action_asdasd = QtWidgets.QAction(MainWindow)
-        self.action_asdasd.setObjectName("action_asdasd")
         self.action_Reset = QtWidgets.QAction(MainWindow)
         self.action_Reset.setObjectName("action_Reset")
         self.action_Update_database = QtWidgets.QAction(MainWindow)
@@ -291,7 +296,6 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.menubar.addAction(self.menu_Program.menuAction())
         for i in range(0,70):
             self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
-
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
@@ -339,9 +343,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         item.setText(_translate("MainWindow", "Perşembe"))
         item = self.schedule.horizontalHeaderItem(4)
         item.setText(_translate("MainWindow", "Cuma"))
+        self.pushButton.setText(_translate("MainWindow", "PushButton"))
         self.menuFile.setTitle(_translate("MainWindow", "&Dosya"))
         self.menu_Program.setTitle(_translate("MainWindow", "&Program"))
-        self.action_asdasd.setText(_translate("MainWindow", "&Ac"))
         self.action_Reset.setText(_translate("MainWindow", "&Sifirla"))
         self.action_Update_database.setText(_translate("MainWindow", "&Veritabanini guncelle"))
         self.action_Load.setText(_translate("MainWindow", "&Ac"))

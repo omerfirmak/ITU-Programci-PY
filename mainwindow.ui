@@ -839,6 +839,29 @@
      </property>
     </column>
    </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>840</x>
+      <y>230</y>
+      <width>93</width>
+      <height>29</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>PushButton</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="scheduleCombobox">
+    <property name="geometry">
+     <rect>
+      <x>830</x>
+      <y>260</y>
+      <width>104</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -846,7 +869,7 @@
      <x>0</x>
      <y>0</y>
      <width>958</width>
-     <height>29</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -874,11 +897,6 @@
     <bool>true</bool>
    </property>
   </widget>
-  <action name="action_asdasd">
-   <property name="text">
-    <string>&amp;Ac</string>
-   </property>
-  </action>
   <action name="action_Reset">
    <property name="text">
     <string>&amp;Sifirla</string>

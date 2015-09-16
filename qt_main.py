@@ -23,7 +23,6 @@ class ITU_Programci():
         self.initDbConnection()
         self.initDepCodeComboBoxes()
         self.connectHandlers()
-
         sys.exit(self.app.exec_())
         return
 
@@ -71,6 +70,8 @@ class ITU_Programci():
         self.ui.action_Update_database.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
         self.ui.action_Save.triggered.connect(self.save)
         self.ui.action_Load.triggered.connect(self.load)
+        self.ui.pushButton.clicked.connect(self.createPossibleSchedules)
+        self.ui.scheduleCombobox.currentIndexChanged.connect(self.scheduleSelectedHandler)
 
     def depCodeSelectedHandler(self):
         senderComboBox = self.ui.sender()
@@ -110,30 +111,55 @@ class ITU_Programci():
 
     def classSelectedHandler(self):
         senderComboBox = self.ui.sender()
-        timeSlots=['' for x in range(0,70)]
-        colorArr = ['' for x in range(0,70)]
+        crnList = []
         for i in range(0,10):
             availClassComboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
             classInfo = availClassComboBox.currentText()
             if classInfo == '':
                 continue
             CRN = classInfo[:5]
-            self.db.execute(('select ClassTime  from classes where CRN=\'%s\'' % CRN))
-            for block in self.db.fetchone()[0].split(','):
+            crnList.append(CRN)
+
+        response = self.isValidSchedule(crnList)
+        if response[0]:
+            self.fillSchedule(response[1],response[2])
+        else:
+            senderComboBox.setCurrentIndex(0)
+            msgbox = QtWidgets.QMessageBox(self.ui)
+            msgbox.setText('Sectiginiz ders baska bir dersinizle cakismaktadir!')
+            msgbox.setWindowTitle('Hata!')
+            msgbox.show()
+            senderComboBox.setCurrentIndex(0)
+
+    def scheduleSelectedHandler(self):
+        index = self.ui.scheduleCombobox.currentIndex()
+        if index <=0:
+            return
+
+        print(self.scheduleList)
+        self.fillClassInfo(self.scheduleList[index-1])
+
+    def isValidSchedule(self,crnList):
+        timeSlots=['' for x in range(0,70)]
+        colorArr=['' for x in range(0,70)]
+        i=0
+        for CRN in crnList:
+            self.db.execute(('select ClassTime,Code  from classes where CRN=\'%s\'' % CRN))
+            query = self.db.fetchone()
+            for block in query[0].split(','):
                 if block == 'Undefined':
                     continue
                 start_stop = block.split('-')
                 for j in range(int(start_stop[0]),int(start_stop[1])):
                     if timeSlots[j] == '':
-                        timeSlots[j] = self.ui.findChild(QtWidgets.QComboBox,'classCodeComboBox_%d' % i).currentText()
+                        timeSlots[j] = query[1]
                         colorArr[j] = rand_col[i]
                     else:
-                        msgbox = QtWidgets.QMessageBox(self.ui)
-                        msgbox.setText('Sectiginiz ders baska bir dersinizle cakismaktadir!')
-                        msgbox.setWindowTitle('Hata!')
-                        msgbox.show()
-                        senderComboBox.setCurrentIndex(0)
-                        return
+                        return (False,None,None)
+            i+=1
+        return (True,timeSlots,colorArr)
+
+    def fillSchedule(self,timeSlots,colorArr):
         for i in range(0,70):
             item = self.ui.schedule.item(i%14,math.floor(i/14))
             item.setText(timeSlots[i])
@@ -209,7 +235,32 @@ class ITU_Programci():
         self.ui.schedule.resize(width,height)
 
         #MainWindow
-        #self.ui.setFixedHeight(self.ui.schedule.geometry().bottom()+40)
+        #self.ui.setHeight(self.ui.schedule.geometry().bottom()+40)
+
+    def createPossibleSchedules(self,checked,crnList=[],timeSlots=[0 for x in range(0,70)],index=0):
+        if index==10:
+            self.scheduleList.append(crnList)
+            self.ui.scheduleCombobox.addItem('%d. opsiyon' % self.ui.scheduleCombobox.count())
+            return
+        elif index==0:
+            self.scheduleList = []
+            self.ui.scheduleCombobox.clear()
+            self.ui.scheduleCombobox.addItem('')
+        comboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % index)
+        if comboBox.count() == 0:
+            self.createPossibleSchedules(checked,crnList,timeSlots,index+1)
+        else:
+            if comboBox.currentIndex() > 0:
+                CRN = comboBox.currentText()[:5]
+                if not self.isValidSchedule(crnList+[CRN])[0]:
+                    return
+                self.createPossibleSchedules(checked,crnList+[CRN],timeSlots,index+1)
+            else:
+                for i in range(1,comboBox.count()):
+                    CRN = comboBox.itemText(i)[:5]
+                    if not self.isValidSchedule(crnList+[CRN])[0]:
+                        continue
+                    self.createPossibleSchedules(checked,crnList+[CRN],timeSlots,index+1)
 
 rand_col=[]
 for i in range(0,10):
