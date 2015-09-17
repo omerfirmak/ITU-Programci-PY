@@ -18,7 +18,7 @@ class ITU_Programci():
         self.app = QtWidgets.QApplication(sys.argv)
         self.ui = ui.Ui_MainWindow()
         self.ui.show()
-        self.resizeWidgets()
+        self.finalizeWidgets()
         self.initDbConnection()
         self.initDepCodeComboBoxes()
         self.connectHandlers()
@@ -45,9 +45,7 @@ class ITU_Programci():
 
     def updateDatabase(self,statusbar):
         ITUSIS_Parser(statusbar).getClasses()
-        self.clearAndChangeStateOfComboBoxes()
-        self.firstBoot = False
-        self.initDepCodeComboBoxes()
+        self.cleafinalizeWidgetsDepCodeComboBoxes()
 
     def initDepCodeComboBoxes(self):
         if self.firstBoot:
@@ -72,7 +70,7 @@ class ITU_Programci():
         self.ui.action_Update_database.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
         self.ui.action_Save.triggered.connect(self.save)
         self.ui.action_Load.triggered.connect(self.load)
-        self.ui.pushButton.clicked.connect(self.createPossibleSchedules)
+        self.ui.createSchedulesButton.clicked.connect(self.createPossibleSchedules)
         self.ui.scheduleCombobox.currentIndexChanged.connect(self.scheduleSelectedHandler)
 
     def depCodeSelectedHandler(self):
@@ -137,8 +135,6 @@ class ITU_Programci():
         index = self.ui.scheduleCombobox.currentIndex()
         if index <=0:
             return
-
-        print(self.scheduleList[index-1])
         self.fillClassInfo(self.scheduleList[index-1])
 
     def isValidSchedule(self,crnList):
@@ -231,7 +227,7 @@ class ITU_Programci():
                 obj.clear()
                 obj.setEnabled(not obj.isEnabled())
 
-    def resizeWidgets(self):
+    def finalizeWidgets(self):
         #TableWidget
         width = 0
         for i in range(self.ui.schedule.columnCount()):
@@ -245,6 +241,11 @@ class ITU_Programci():
         height += self.ui.schedule.horizontalScrollBar().sizeHint().height()/6
         self.ui.schedule.resize(width,height)
 
+        #Otomatik program olusturma bolumu
+        self.ui.depCodeInput.setText('BLGE')
+        self.ui.hourStartInput.setText('8')
+        self.ui.hourEndInput.setText('19')
+        self.ui.unwantedBuildInput.setText('MKB,ISB,MMB,GDB')
         #MainWindow
         #self.ui.setHeight(self.ui.schedule.geometry().bottom()+40)
 
