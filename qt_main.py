@@ -101,21 +101,55 @@ class ITU_Programci():
             nextComboBox.clear()
             return
 
-        self.db.execute('select CRN , Title , Inst  ,Build , Day ,Time  from classes where Code=\'%s\'' % classCode)
+        self.db.execute('select CRN , Title , Inst  ,Build , Day ,Time, Restr,ClassTime  from classes where Code=\'%s\'' % classCode)
         availClassList =['']
         for elem in self.db.fetchall():
+            if not self.checkIfMeetsCriteria(elem):
+                continue
             availClassList.append('%s :: %s :: %s :: %s :: %s :: %s' % (elem[0],elem[1],elem[2],elem[4],elem[5],elem[3]))
 
         nextComboBox.clear()
+        if availClassList == ['']:
+            availClassList = ['Kriterlerinize uygun grup yok']
         nextComboBox.addItems(availClassList)
 
+    def checkIfMeetsCriteria(self,classInfo):
+        studentDepCode = self.ui.depCodeInput.text()
+        if self.ui.useDepCodeCheckbox.isChecked() and studentDepCode not in classInfo[6]:
+            return False
+        classTime = classInfo[7]
+        freeDays=[]
+        for i in range(0,5):
+            obj = self.ui.findChild(QtWidgets.QCheckBox,'freeDaysCheckbox_%s' % i)
+            if obj.isChecked():
+                freeDays.append(i)
+
+        for block in classTime.split(','):
+            if block == 'Undefined':
+                continue
+            start_end = block.split('-')
+            start = int(start_end[0])
+            end = int(start_end[1])
+            if math.floor(start/14) in freeDays:
+                return False
+            if self.ui.hourStartInput.text() != '' and self.ui.hourEndInput.text() != '' :
+                if start%14+8 < int(self.ui.hourStartInput.text()) or  end%14+8 >= int(self.ui.hourEndInput.text()):
+                    return False
+
+        unwantedBuildList = self.ui.unwantedBuildInput.text()
+        for building in classInfo[3].split(','):
+            if building in unwantedBuildList:
+                return False
+
+
+        return True
     def classSelectedHandler(self):
         senderComboBox = self.ui.sender()
         crnList = []
         for i in range(0,10):
             availClassComboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
             classInfo = availClassComboBox.currentText()
-            if classInfo == '':
+            if classInfo == '' or classInfo == 'Kriterlerinize uygun grup yok':
                 continue
             CRN = classInfo[:5]
             crnList.append(CRN)
@@ -152,8 +186,8 @@ class ITU_Programci():
             for block in query[0].split(','):
                 if block == 'Undefined':
                     continue
-                start_stop = block.split('-')
-                for j in range(int(start_stop[0]),int(start_stop[1])):
+                start_end = block.split('-')
+                for j in range(int(start_end[0]),int(start_end[1])):
                     if timeSlots[j] == '':
                         timeSlots[j] = query[1]
                         colorArr[j] = rand_col[i]
@@ -194,8 +228,8 @@ class ITU_Programci():
 
     def fillClassInfo(self,crnList):
         for i in range(0,10):
-            comboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i)
-            comboBox.setCurrentIndex(0)
+            obj = self.ui.findChild(QtWidgets.QComboBox,'depCodeComboBox_%d' % i)
+            obj.setCurrentIndex(0)
 
         i=0
         for CRN in crnList:
@@ -259,7 +293,7 @@ class ITU_Programci():
             self.ui.scheduleCombobox.clear()
             self.ui.scheduleCombobox.addItem('')
         comboBox = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % index)
-        if comboBox.count() == 0:
+        if comboBox.count() <= 1:
             self.createPossibleSchedules(checked,crnList,timeSlots,index+1)
         else:
             if comboBox.currentIndex() > 0:
