@@ -45,9 +45,7 @@ class ITU_Programci():
 
     def updateDatabase(self,statusbar):
         ITUSIS_Parser(statusbar).getClasses()
-        self.clearAndChangeStateOfComboBoxes()
-        self.firstBoot = False
-        self.initDepCodeComboBoxes()
+        self.cleafinalizeWidgetsDepCodeComboBoxes()
 
     def initDepCodeComboBoxes(self):
         if self.firstBoot:
@@ -328,5 +326,4 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
 
     for i in range(0,70):
         self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
-
 '''
