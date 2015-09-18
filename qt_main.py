@@ -45,7 +45,9 @@ class ITU_Programci():
 
     def updateDatabase(self,statusbar):
         ITUSIS_Parser(statusbar).getClasses()
-        self.cleafinalizeWidgetsDepCodeComboBoxes()
+        self.clearAndChangeStateOfComboBoxes()
+        self.firstBoot = False
+        self.initDepCodeComboBoxes()
 
     def initDepCodeComboBoxes(self):
         if self.firstBoot:
