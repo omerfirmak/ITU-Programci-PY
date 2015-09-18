@@ -45,7 +45,9 @@ class ITU_Programci():
 
     def updateDatabase(self,statusbar):
         ITUSIS_Parser(statusbar).getClasses()
-        self.cleafinalizeWidgetsDepCodeComboBoxes()
+        self.clearAndChangeStateOfComboBoxes()
+        self.firstBoot = False
+        self.initDepCodeComboBoxes()
 
     def initDepCodeComboBoxes(self):
         if self.firstBoot:
@@ -141,8 +143,8 @@ class ITU_Programci():
             if building in unwantedBuildList:
                 return False
 
-
         return True
+
     def classSelectedHandler(self):
         senderComboBox = self.ui.sender()
         crnList = []
