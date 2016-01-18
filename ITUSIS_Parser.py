@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import time
 import sqlite3
 import os
 import requests
@@ -50,6 +51,8 @@ class ITUSIS_Parser:
                     for elem in cells.descendants:
                         if(isinstance(elem,basestring)):
                             cellEntry.append(elem)
+                    if cellEntry == []:
+                        cellEntry.append("")
                     classEntry.append(cellEntry)
                     cellEntry=[]
                 classList.append(classEntry)
@@ -74,9 +77,17 @@ class ITUSIS_Parser:
 
         for i in range(0,len(day)):
             hourasd = hour[i].split('/')
-            if(hourasd[0] == ''):
+            if hourasd[0] == '':
                 return "Undefined"
-            start_t = ITUSIS_Parser.days.index(day[i][:2])*14+(int(hourasd[0][:2])-8);
+
+            try:
+                start_t = ITUSIS_Parser.days.index(day[i][:2])*14+(int(hourasd[0][:2])-8);
+            except:
+                if len(day) == 1:
+                    return "Undefined"
+                else:
+                    continue
+
             stop_t = start_t + int(hourasd[1][:2]) - int(hourasd[0][:2])
             list.append(str(start_t) +'-' + str(stop_t))
         return ','.join(list)

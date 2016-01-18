@@ -237,6 +237,9 @@ class ITU_Programci():
         for CRN in crnList:
             self.db.execute('select Depcode,Code from classes where CRN=%s' % CRN)
             query = self.db.fetchone()
+            print(query)
+            if query == None:
+                continue
             obj = self.ui.findChild(QtWidgets.QComboBox,'depCodeComboBox_%d' % i)
             obj.setCurrentText(query[0])
             obj = self.ui.findChild(QtWidgets.QComboBox,'classCodeComboBox_%d' % i)
