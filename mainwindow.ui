@@ -1069,7 +1069,7 @@ binalar</string>
      <x>0</x>
      <y>0</y>
      <width>958</width>
-     <height>29</height>
+     <height>28</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -1086,8 +1086,15 @@ binalar</string>
     <addaction name="action_Reset"/>
     <addaction name="action_Update_database"/>
    </widget>
+   <widget class="QMenu" name="menuDiger">
+    <property name="title">
+     <string>Di&amp;ger</string>
+    </property>
+    <addaction name="actionJS_kodunu_kopyala"/>
+   </widget>
    <addaction name="menuFile"/>
    <addaction name="menu_Program"/>
+   <addaction name="menuDiger"/>
   </widget>
   <widget class="QStatusBar" name="statusbar">
    <property name="toolTip">
@@ -1115,6 +1122,11 @@ binalar</string>
   <action name="action_Save">
    <property name="text">
     <string>&amp;Kaydet</string>
+   </property>
+  </action>
+  <action name="actionJS_kodunu_kopyala">
+   <property name="text">
+    <string>&amp;JS kodunu kopyala</string>
    </property>
   </action>
  </widget>

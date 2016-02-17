@@ -5,14 +5,18 @@ import requests
 import re
 from bs4 import BeautifulSoup
 import sys
+
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-class ITUSIS_Parser:
+class ITUSIS_Parser(QtCore.QThread):
     days=['Pa','Sa','Ça','Pe','Cu']
-    def __init__(self,statusbar=None):
+
+    updateStatusBarSignal = QtCore.pyqtSignal(str)
+
+    def __init__(self):
+        super(ITUSIS_Parser, self).__init__()
         reload(sys)
         sys.setdefaultencoding('utf-8')
-        self.statusbar = statusbar
         self.db=sqlite3.connect('classdb.sqlite',check_same_thread=False)
         self.cur=self.db.cursor()
         try:
@@ -21,6 +25,8 @@ class ITUSIS_Parser:
             pass
         self.cur.execute('CREATE TABLE classes (Depcode TEXT, CRN TEXT, Code TEXT, Title TEXT, Inst TEXT ,Build TEXT, ClassTime TEXT,Restr TEXT,Day TEXT, Time TEXT )')
 
+    def run(self):
+        self.getClasses()
 
     def getDepartmentCodes(self):
         list=[]
@@ -36,8 +42,7 @@ class ITUSIS_Parser:
 
     def getClasses(self):
         for dep in self.getDepartmentCodes():
-            if self.statusbar != None:
-                self.statusbar.showMessage('%s guncelleniyor.' % dep)
+            self.updateStatusBarSignal.emit(dep)
             classList=[]
             classEntry=[]
             cellEntry=[]
@@ -57,8 +62,7 @@ class ITUSIS_Parser:
                 classList.append(classEntry)
                 classEntry=[]
             self.addToDatabase(classList,dep)
-        if self.statusbar != None:
-            self.statusbar.showMessage('Guncelleme bitti.')
+        self.updateStatusBarSignal.emit('end')
         self.db.close()
 
     def addToDatabase(self,data,dep):
@@ -88,5 +92,15 @@ class ITUSIS_Parser:
                     continue
 
             stop_t = start_t + int(hourasd[1][:2]) - int(hourasd[0][:2])
-            list.append(str(start_t) +'-' + str(stop_t))
+
+            if hourasd[0][-2:] == "00":
+                start_t-=0.5
+
+            if hourasd[1][-3:-1] == "59":
+                stop_t+=0.5
+
+            start_t*=2
+            stop_t*=2
+
+            list.append(str(int(start_t)) +'-' + str(int(stop_t)))
         return ','.join(list)

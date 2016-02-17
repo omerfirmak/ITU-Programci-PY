@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.5
+# Created by: PyQt5 UI code generator 5.5.1
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -316,12 +316,14 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.useDepCodeCheckbox.setObjectName("useDepCodeCheckbox")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 958, 29))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 958, 28))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
         self.menu_Program = QtWidgets.QMenu(self.menubar)
         self.menu_Program.setObjectName("menu_Program")
+        self.menuDiger = QtWidgets.QMenu(self.menubar)
+        self.menuDiger.setObjectName("menuDiger")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setToolTip("")
@@ -336,12 +338,16 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.action_Load.setObjectName("action_Load")
         self.action_Save = QtWidgets.QAction(MainWindow)
         self.action_Save.setObjectName("action_Save")
+        self.actionJS_kodunu_kopyala = QtWidgets.QAction(MainWindow)
+        self.actionJS_kodunu_kopyala.setObjectName("actionJS_kodunu_kopyala")
         self.menuFile.addAction(self.action_Load)
         self.menuFile.addAction(self.action_Save)
         self.menu_Program.addAction(self.action_Reset)
         self.menu_Program.addAction(self.action_Update_database)
+        self.menuDiger.addAction(self.actionJS_kodunu_kopyala)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menu_Program.menuAction())
+        self.menubar.addAction(self.menuDiger.menuAction())
         for i in range(0,70):
             self.schedule.setItem(i%14,math.floor(i/14),QtWidgets.QTableWidgetItem())
 
@@ -408,7 +414,9 @@ class Ui_MainWindow(QtWidgets.QMainWindow):
         self.useDepCodeCheckbox.setText(_translate("MainWindow", "Kullan"))
         self.menuFile.setTitle(_translate("MainWindow", "&Dosya"))
         self.menu_Program.setTitle(_translate("MainWindow", "&Program"))
+        self.menuDiger.setTitle(_translate("MainWindow", "Di&ger"))
         self.action_Reset.setText(_translate("MainWindow", "&Sifirla"))
         self.action_Update_database.setText(_translate("MainWindow", "&Veritabanini guncelle"))
         self.action_Load.setText(_translate("MainWindow", "&Ac"))
         self.action_Save.setText(_translate("MainWindow", "&Kaydet"))
+        self.actionJS_kodunu_kopyala.setText(_translate("MainWindow", "&JS kodunu kopyala"))

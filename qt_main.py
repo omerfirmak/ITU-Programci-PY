@@ -20,7 +20,6 @@ class ITU_Programci():
         self.ui.show()
         self.finalizeWidgets()
         self.initDbConnection()
-        self.initDepCodeComboBoxes()
         self.connectHandlers()
         self.cache = {}
         self.count=0
@@ -29,29 +28,29 @@ class ITU_Programci():
 
     def initDbConnection(self):
         if not os.path.isfile('classdb.sqlite'):
-            self.firstBoot = True
-            self.createDatabaseUpdateThread(self.ui.statusbar)
+            self.updateDatabase()
+            self.conn=sqlite3.connect('classdb.sqlite',check_same_thread=False)
+            self.db=self.conn.cursor()
         else:
-            self.firstBoot = False
+            self.conn=sqlite3.connect('classdb.sqlite',check_same_thread=False)
+            self.db=self.conn.cursor()
+            self.initDepCodeComboBoxes()
 
-        self.conn=sqlite3.connect('classdb.sqlite',check_same_thread=False)
-        self.db=self.conn.cursor()
-
-    def createDatabaseUpdateThread(self,statusbar):
-        self.cache = {}
-        databaseUpdateThread = threading.Thread(target=self.updateDatabase, args=(statusbar,))
+    def updateDatabase(self):
         self.clearAndChangeStateOfComboBoxes()
-        databaseUpdateThread.start()
+        self.updateThread = ITUSIS_Parser()
+        self.updateThread.updateStatusBarSignal.connect(self.updateStatusBar)
+        self.updateThread.start()
 
-    def updateDatabase(self,statusbar):
-        ITUSIS_Parser(statusbar).getClasses()
-        self.clearAndChangeStateOfComboBoxes()
-        self.firstBoot = False
-        self.initDepCodeComboBoxes()
+    def updateStatusBar(self,depCode):
+        if depCode == 'end':
+            self.ui.statusbar.showMessage('Guncelleme bitti.')
+            self.clearAndChangeStateOfComboBoxes()
+            self.initDepCodeComboBoxes()
+        else:
+            self.ui.statusbar.showMessage('%s guncelleniyor.' % depCode)
 
     def initDepCodeComboBoxes(self):
-        if self.firstBoot:
-            return
         depCodeList=['']
         for code in self.db.execute('select distinct Depcode from classes'):
             depCodeList.append(code[0])
@@ -69,9 +68,10 @@ class ITU_Programci():
                 obj.currentIndexChanged.connect(handlers[j])
 
         self.ui.action_Reset.triggered.connect(self.reset)
-        self.ui.action_Update_database.triggered.connect(functools.partial(self.createDatabaseUpdateThread, self.ui.statusbar))
+        self.ui.action_Update_database.triggered.connect(self.updateDatabase)
         self.ui.action_Save.triggered.connect(self.save)
         self.ui.action_Load.triggered.connect(self.load)
+        self.ui.actionJS_kodunu_kopyala.triggered.connect(self.generateJS)
         self.ui.createSchedulesButton.clicked.connect(self.createPossibleSchedules)
         self.ui.scheduleCombobox.currentIndexChanged.connect(self.scheduleSelectedHandler)
 
@@ -174,8 +174,8 @@ class ITU_Programci():
         self.fillClassInfo(self.scheduleList[index-1])
 
     def isValidSchedule(self,crnList):
-        timeSlots=['' for x in range(0,70)]
-        colorArr=['' for x in range(0,70)]
+        timeSlots=['' for x in range(0,140)]
+        colorArr=['' for x in range(0,140)]
         i=0
         for CRN in crnList:
             if CRN in self.cache:
@@ -201,11 +201,18 @@ class ITU_Programci():
     def fillSchedule(self,timeSlots,colorArr):
         for i in range(0,70):
             item = self.ui.schedule.item(i%14,math.floor(i/14))
-            item.setText(timeSlots[i])
-            if timeSlots[i] != '':
+            item.setText('')
+            item.setBackground(QtGui.QColor('white'))
+
+        for i in range(0,140):
+            item = self.ui.schedule.item(math.floor(i/2)%14,math.floor(i/28))
+            if timeSlots[i] !='':
+                if item.text() != '' :
+                    if item.text() != timeSlots[i]:
+                        item.setText(item.text()+' / '+timeSlots[i])
+                else:
+                    item.setText(timeSlots[i])
                 item.setBackground(colorArr[i])
-            else:
-                item.setBackground(QtGui.QColor('white'))
 
     def save(self):
         classList=[]
@@ -227,6 +234,17 @@ class ITU_Programci():
         saveFile = open(fileName[0],'r')
         crnList = saveFile.read().replace('\n','').split(',')
         self.fillClassInfo(crnList)
+
+    def generateJS(self):
+        jsTemplate = "javascript:var crn=[%s];for(var i=0;i<crn.length;i++){var d=document.getElementById(\"crn_id\"+(i+1));d.value=crn[i];}void(0);"
+        classList=[]
+        for i in range(0,10):
+            classEntry = self.ui.findChild(QtWidgets.QComboBox,'availClassComboBox_%d' % i).currentText()
+            if classEntry != '':
+                classList.append(classEntry[:5])
+        cb = QtWidgets.QApplication.clipboard()
+        cb.clear(mode=cb.Clipboard )
+        cb.setText(jsTemplate % ",".join(classList), mode=cb.Clipboard)
 
     def fillClassInfo(self,crnList):
         for i in range(0,10):
