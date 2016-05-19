@@ -330,8 +330,10 @@ class ITU_Programci():
                         continue
                     self.createPossibleSchedules(checked,crnList+[CRN],timeSlots,index+1)
 
-if platform.system() == 'Darwin' and  hasattr(sys, 'frozen'):
-    os.chdir(os.path.abspath(os.path.dirname(sys.executable)))
+os.chdir(os.path.expanduser("~"))
+if not os.path.exists('.programci'):
+    os.makedirs('.programci')
+os.chdir('.programci')
 
 count=0
 rand_col=[]
