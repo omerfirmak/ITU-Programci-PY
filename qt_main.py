@@ -126,17 +126,17 @@ class ITU_Programci():
             obj = self.ui.findChild(QtWidgets.QCheckBox,'freeDaysCheckbox_%s' % i)
             if obj.isChecked():
                 freeDays.append(i)
-
         for block in classTime.split(','):
             if block == 'Undefined':
                 continue
             start_end = block.split('-')
             start = int(start_end[0])
             end = int(start_end[1])
-            if math.floor(start/14) in freeDays:
+            print(end,start)
+            if math.floor(start/28) in freeDays:
                 return False
             if self.ui.hourStartInput.text() != '' and self.ui.hourEndInput.text() != '' :
-                if start%14+8 < int(self.ui.hourStartInput.text()) or  end%14+8 >= int(self.ui.hourEndInput.text()):
+                if start%28+8 < int(self.ui.hourStartInput.text()) or  end%28+8 >= int(self.ui.hourEndInput.text()):
                     return False
 
         unwantedBuildList = self.ui.unwantedBuildInput.text()
