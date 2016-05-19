@@ -9,6 +9,7 @@ import os
 import math
 import random
 import functools
+import platform
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from ITUSIS_Parser import ITUSIS_Parser
@@ -329,6 +330,10 @@ class ITU_Programci():
                     if not self.isValidSchedule(crnList+[CRN])[0]:
                         continue
                     self.createPossibleSchedules(checked,crnList+[CRN],timeSlots,index+1)
+
+if platform.system() == 'Darwin' and  hasattr(sys, 'frozen'):
+    os.chdir(os.path.abspath(os.path.dirname(sys.executable)))
+
 count=0
 rand_col=[]
 for i in range(0,10):
